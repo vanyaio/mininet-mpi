@@ -87,10 +87,17 @@ class FatTree( Topo ):
         for x in xrange(0, self.iAggLayerSwitch, end):
             for i in xrange(0, end):
                 for j in xrange(0, end):
+                    core_ind = i * end + j
+                    agg_ind = x + i
                     linkopts = dict(bw=bw_c2a)
+
+                    if ((core_ind == 0) and (agg_ind == 0)):
+                        bw_damaged = bw_c2a #TODO: it should be some other value
+                        linkopts = dict(bw=bw_damaged)
+
                     self.addLink(
-                        self.CoreSwitchList[i*end+j],
-                        self.AggSwitchList[x+i],
+                        self.CoreSwitchList[core_ind],
+                        self.AggSwitchList[agg_ind],
                         **linkopts)
 
         logger.debug("Add link Agg to Edge.")
