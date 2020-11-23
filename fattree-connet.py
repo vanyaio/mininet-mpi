@@ -141,6 +141,21 @@ def pingTest(net):
     logger.debug("Start Test all network")
     net.pingAll()
 
+def dump_etc_hosts(net):
+    f = open(os.getenv('VOLUME') + '/etc_hosts', "a")
+    for d in net.hosts:
+        f.write(d.IP() + ' ' + d.name + '\n')
+    f.close()
+
+def dump_mpi_hosts_file(net):
+    f = open(os.getenv('VOLUME') + '/mpi_hosts_file', "a")
+    for d in net.hosts:
+        f.write(d.name + '\n')
+    f.close()
+
+def run_set_ssh(net):
+    for d in net.hosts:
+        d.cmd('/data/set_ssh.sh start')
 
 def createTopo(pod, density, ip="127.0.0.1", port=6633, bw_c2a=0.2, bw_a2e=0.1, bw_h2a=0.05):
     logging.debug("LV1 Create Fattree")
@@ -157,6 +172,10 @@ def createTopo(pod, density, ip="127.0.0.1", port=6633, bw_c2a=0.2, bw_a2e=0.1, 
         'controller', controller=RemoteController,
         ip=CONTROLLER_IP, port=CONTROLLER_PORT)
     net.start()
+
+    dump_etc_hosts(net)
+    dump_mpi_hosts_file(net)
+    run_set_ssh(net)
 
     CLI(net)
     net.stop()

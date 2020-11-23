@@ -10,10 +10,11 @@ Host *
 	UserKnownHostsFile=/dev/null
 EOF
 
-cat << EOF >> /etc/hosts
-10.0.0.251 d1
-10.0.0.252 d2
-EOF
+# cat << EOF >> /etc/hosts
+# 10.0.0.251 d1
+# 10.0.0.252 d2
+# EOF
+cat /data/etc_hosts >> /etc/hosts
 
 
 if test "$1" = "start" ; then
