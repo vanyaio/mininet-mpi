@@ -17,9 +17,11 @@ popd
 
 ../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
 sleep 3
+
 # python3 fattree-connet.py
 cat <<EOF | python3 fattree-connet.py
 h001 /data/start_app.sh
 EOF
 
+cp $VOLUME/exec_time exec_time &> /dev/null
 kill %
