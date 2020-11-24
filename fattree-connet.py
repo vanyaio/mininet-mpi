@@ -13,6 +13,8 @@ from mininet.topo import Topo
 from mininet.util import dumpNodeConnections
 import logging
 import os
+from random import randrange
+
 
 logging.basicConfig(filename='./fattree.log', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -82,31 +84,39 @@ class Fattree(Topo):
     Add Link
     """
     def createLink(self, bw_c2a=0.2, bw_a2e=0.1, bw_h2a=0.5):
+        loss_prob = int(os.getenv('PACKET_LOSS'))
+        loss = 0
+
         logger.debug("Add link Core to Agg.")
         end = int(self.pod/2)
         for x in range(0, self.iAggLayerSwitch, end):
             for i in range(0, end):
                 for j in range(0, end):
+                    core_ind = i * end + j
+                    agg_ind = x + i
+                    loss = 10 if (int(randrange(100)) < loss_prob) else 0
                     self.addLink(
-                        self.CoreSwitchList[i*end+j],
-                        self.AggSwitchList[x+i],
-                        bw=bw_c2a)
+                        self.CoreSwitchList[core_ind],
+                        self.AggSwitchList[agg_ind],
+                        bw=bw_c2a, loss=loss)
 
         logger.debug("Add link Agg to Edge.")
         for x in range(0, self.iAggLayerSwitch, end):
             for i in range(0, end):
                 for j in range(0, end):
+                    loss = 10 if (int(randrange(100)) < loss_prob) else 0
                     self.addLink(
                         self.AggSwitchList[x+i], self.EdgeSwitchList[x+j],
-                        bw=bw_a2e)
+                        bw=bw_a2e, loss=loss)
 
         logger.debug("Add link Edge to Host.")
         for x in range(0, self.iEdgeLayerSwitch):
             for i in range(0, self.density):
+                loss = 10 if (int(randrange(100)) < loss_prob) else 0
                 self.addLink(
                     self.EdgeSwitchList[x],
                     self.HostList[self.density * x + i],
-                    bw=bw_h2a)
+                    bw=bw_h2a, loss=loss)
 
     def set_ovs_protocol_13(self,):
         self._set_ovs_protocol_13(self.CoreSwitchList)
@@ -185,4 +195,4 @@ if __name__ == '__main__':
     if os.getuid() != 0:
         logger.debug("You are NOT root")
     elif os.getuid() == 0:
-        createTopo(4, 2)
+        createTopo(4, 1)
