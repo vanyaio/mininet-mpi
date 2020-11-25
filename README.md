@@ -55,10 +55,10 @@ PACKET_LOSS - percentage of broken links with packets loss, default is 0
 
 Run:
 
-``
+```
 vagrant@ubuntu$ cd /home/ubuntu/containernet/mininet-mpi
 vagrant@ubuntu$ sudo -E ./run.sh
-``
+```
 
 And finally see application output.
 
@@ -98,7 +98,7 @@ and starts run.sh with ssh, accumulating execution time of each run in
 all_exec_times file and drawing graph with draw_python.py.
 
 ## Useful links
-The following links are helpful if you decide to dig into sources
+The following links are helpful if you decide to dig into sources:
 http://mininet.org - Mininet network emulator.
 https://containernet.github.io - fork of the Mininet which allows to use Docker containers as hosts.
 https://mpitutorial.com/tutorials - great resource with MPI installation and related
