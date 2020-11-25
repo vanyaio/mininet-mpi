@@ -80,6 +80,8 @@ $ ./stats_run.sh
 
 ## Architecture
 
+![alt text](arch.png?raw=true)
+
 The main script is run.sh that makes these steps:
 1. Build Docker image required for running MPI on each node.
 2. Create shared storage with Docker volumes mechanism.
