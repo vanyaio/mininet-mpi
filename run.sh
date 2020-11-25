@@ -1,5 +1,10 @@
 #!/bin/bash
 #run this script as root
+# Accept following env variables:
+# PACKET_LOSS, default value 0
+# PODS, default value 4
+# DENSITY, default value 1
+
 
 docker stop $(docker ps -a -q) ; docker rm $(docker ps -a -q)
 docker build -t spagnuolocarmine/docker-mpi .
@@ -17,7 +22,12 @@ popd
 
 ../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
 
+export PACKET_LOSS
+export PODS
+export DENSITY
 if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
+if test "$PODS" = ""; then PODS=4; fi
+if test "$DENSITY" = ""; then DENSITY=1; fi
 # python3 fattree-connet.py
 cat <<EOF | python3 fattree-connet.py
 sh sleep 3

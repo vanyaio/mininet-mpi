@@ -195,4 +195,4 @@ if __name__ == '__main__':
     if os.getuid() != 0:
         logger.debug("You are NOT root")
     elif os.getuid() == 0:
-        createTopo(4, 1)
+        createTopo(int(os.getenv('PODS')), int(os.getenv('DENSITY')))
