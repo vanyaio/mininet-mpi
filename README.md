@@ -49,8 +49,8 @@ vagrant@ubuntu$ cd /home/ubuntu/containernet/mininet-mpi
 ```
 
 You may export following environment variables:
-PODS - number of pods in fat-tree topology, default value 4
-DENSITY - density of fat-tree topology (nubmer of nodes for each edge switch), default value 1
+PODS - number of pods in fat-tree topology, default value 4\
+DENSITY - density of fat-tree topology (nubmer of nodes for each edge switch), default value 1\
 PACKET_LOSS - percentage of broken links with packets loss, default is 0
 
 Run:
@@ -98,16 +98,16 @@ and starts run.sh with ssh, accumulating execution time of each run in
 all_exec_times file and drawing graph with draw_python.py.
 
 ## Useful links
-The following links are helpful if you decide to dig into sources:
-http://mininet.org - Mininet network emulator.
-https://containernet.github.io - fork of the Mininet which allows to use Docker containers as hosts.
+The following links are helpful if you decide to dig into sources:\
+http://mininet.org - Mininet network emulator.\
+https://containernet.github.io - fork of the Mininet which allows to use Docker containers as hosts.\
 https://mpitutorial.com/tutorials - great resource with MPI installation and related
-tutorials.
-https://noxrepo.github.io/pox-doc/html - networking software platform.
-https://www.docker.com - software for creating containers. 
-https://www.vagrantup.com - allows to run VM in easy way.
+tutorials.\
+https://noxrepo.github.io/pox-doc/html - networking software platform.\
+https://www.docker.com - software for creating containers.\
+https://www.vagrantup.com - allows to run VM in easy way.\
 https://linuxcommand.org/tlcl.php - The Linux Command Line by William Shotts is
-a great resource for learning shell scripting.
+a great resource for learning shell scripting.\
 https://docs.python.org/3/tutorial - tutorial for Python programming language used
-by both Mininet and Containernet.
+by both Mininet and Containernet.\
 https://www.cs.cornell.edu/courses/cs5413/2014fa/lectures/08-fattree.pdf - description of fat-tree topology.
