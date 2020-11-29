@@ -50,12 +50,23 @@ $ vagrantup ssh
 vagrant@ubuntu$ cd /home/ubuntu/containernet/mininet-mpi
 ```
 
-You may export following environment variables:
-PODS - number of pods in fat-tree topology, default value 4\
-DENSITY - density of fat-tree topology (nubmer of nodes for each edge switch), default value 1\
-PACKET_LOSS - percentage of broken links with packets loss, default is 0
+There are two network topologies to choose from: 'fattree' and 'dragonfly'.
+
+When choosing a 'fattree' topology you may export following environment variables:
+- PODS - number of pods in fat-tree topology, default value 4
+- DENSITY - density of fat-tree topology (nubmer of nodes for each edge switch), default value 1
+
+If the 'dragonfly' topology is selected you may export following environment variables:
+- NUM_GROUPS - number of switch groups, default value 4
+- NUM_SW_IN_GROUP - number of switches in the group, default value 3
+- NUM_HOSTS_FOR_SW - number of hosts for each switch, default value 1
+- NUM_INTER_LINKS - number of inter-links for each switch, default value 1
+
+And also PACKET_LOSS - percentage of broken links with packets loss, default is 0
 
 Run:
+> To use 'fattree', run script './run.sh' with 'fattree' or empty argument\
+> To use 'dragonfly', run script './run.sh' with 'dragonfly' argument
 
 ```
 vagrant@ubuntu$ cd /home/ubuntu/containernet/mininet-mpi
@@ -80,7 +91,7 @@ And run this script from host machine:
 $ ./stats_run.sh
 ```
 
-## Architecture
+## Architecture _(using the Fat Tree example)_
 
 ![alt text](arch.png?raw=true)
 
@@ -114,4 +125,5 @@ https://linuxcommand.org/tlcl.php - The Linux Command Line by William Shotts is
 a great resource for learning shell scripting.\
 https://docs.python.org/3/tutorial - tutorial for Python programming language used
 by both Mininet and Containernet.\
-https://www.cs.cornell.edu/courses/cs5413/2014fa/lectures/08-fattree.pdf - description of fat-tree topology.
+https://www.cs.cornell.edu/courses/cs5413/2014fa/lectures/08-fattree.pdf - description of Fat Tree topology.
+https://www.osti.gov/servlets/purl/1510703 - description of Dragonfly topology.
