@@ -84,7 +84,7 @@ class Fattree(Topo):
     Add Link
     """
     def createLink(self, bw_c2a=0.2, bw_a2e=0.1, bw_h2a=0.5):
-        loss_prob = int(os.getenv('PACKET_LOSS'))
+        loss_prob = int(os.getenv('PACKET_LOSS', default=0))
         loss = 0
 
         logger.debug("Add link Core to Agg.")
@@ -195,4 +195,4 @@ if __name__ == '__main__':
     if os.getuid() != 0:
         logger.debug("You are NOT root")
     elif os.getuid() == 0:
-        createTopo(int(os.getenv('PODS')), int(os.getenv('DENSITY')))
+        createTopo(int(os.getenv('PODS', default=4)), int(os.getenv('DENSITY', default=1)))

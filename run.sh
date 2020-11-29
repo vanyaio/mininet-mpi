@@ -1,10 +1,32 @@
 #!/bin/bash
 #run this script as root
-# Accept following env variables:
-# PACKET_LOSS, default value 0
-# PODS, default value 4
-# DENSITY, default value 1
+# Accept following variants of topology: 'fattree', 'dragonfly'. Default 'fattree'
+# Accept following env variables for 'fattree':
+# - PACKET_LOSS, default value 0
+# - PODS, default value 4
+# - DENSITY, default value 1
+# Accept following env variables for 'dragonfly':
+# - PACKET_LOSS, default value 0
+# - NUM_GROUPS, default value 4
+# - NUM_SW_IN_GROUP, default value 3
+# - NUM_HOSTS_FOR_SW, default value 1
+# - NUM_INTER_LINKS, default value 1
 
+TOPO="fattree"
+if [ $# -lt 2 ]; then
+    if [ "$1" "==" "fattree" ]; then
+        TOPO="fattree"
+    elif [ "$1" "==" "dragonfly" ]; then
+        TOPO="dragonfly"
+    elif [ "$1" "==" "" ]; then
+        :
+    else
+        set -e ; echo -e "\e[1;31m\"$1\" is not correct name of topology\e[0m"
+    fi
+else
+    set -e ; echo -e "\e[1;31mNot correct number of arguments\e[0m"
+fi
+echo -e "\e[32mUsed '$TOPO' topology\e[0m"
 
 docker stop $(docker ps -a -q) ; docker rm $(docker ps -a -q)
 docker build -t spagnuolocarmine/docker-mpi .
@@ -22,17 +44,35 @@ popd
 
 ../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
 
-export PACKET_LOSS
-export PODS
-export DENSITY
-if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
-if test "$PODS" = ""; then PODS=4; fi
-if test "$DENSITY" = ""; then DENSITY=1; fi
-# python3 fattree-connet.py
-cat <<EOF | python3 fattree-connet.py
-sh sleep 3
-h001 /data/start_app.sh
+if [ "$TOPO" "==" "fattree" ]; then
+    export PACKET_LOSS
+    export PODS
+    export DENSITY
+    if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
+    if test "$PODS" = ""; then PODS=4; fi
+    if test "$DENSITY" = ""; then DENSITY=1; fi
+    # python3 fattree-connet.py
+    cat <<EOF | python3 fattree-connet.py
+    sh sleep 3
+    h001 /data/start_app.sh
 EOF
+elif [ "$TOPO" "==" "dragonfly" ]; then
+    export PACKET_LOSS
+    export NUM_GROUPS
+    export NUM_SW_IN_GROUP
+    export NUM_HOSTS_FOR_SW
+    export NUM_INTER_LINKS
+    if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
+    if test "$NUM_GROUPS" = ""; then NUM_GROUPS=4; fi
+    if test "$NUM_SW_IN_GROUP" = ""; then NUM_SW_IN_GROUP=3; fi
+    if test "$NUM_HOSTS_FOR_SW" = ""; then NUM_HOSTS_FOR_SW=1; fi
+    if test "$NUM_INTER_LINKS" = ""; then NUM_INTER_LINKS=1; fi
+    # python3 dragonfly-connet.py
+    cat <<EOF | python3 dragonfly-connet.py
+    sh sleep 3
+    h001 /data/start_app.sh
+EOF
+fi
 
 cp $VOLUME/exec_time exec_time &> /dev/null
 kill %
