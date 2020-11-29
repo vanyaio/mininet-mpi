@@ -14,10 +14,8 @@
 
 TOPO="fattree"
 if test $# -lt 2 ; then
-    if test "$1" = "fattree" ; then
-        TOPO="fattree"
-    elif test "$1" = "dragonfly" ; then
-        TOPO="dragonfly"
+    if test "$1" = "fattree" || test "$1" = "dragonfly"; then
+        TOPO="$1"
     elif test "$1" = "" ; then
         :
     else
