@@ -26,9 +26,16 @@ RUN apt-get --yes -qq update \
                       vim       \
                       htop      \
                       openssh-server \
-			net-tools \
-			iputils-ping \
-			mpich \
-			iproute2
+                      net-tools \
+                      iputils-ping \
+                      mpich \
+                      iproute2 \
+                      openvswitch-switch \
+                      build-essential \
+                      fakeroot \
+                      graphviz \
+                      autoconf \
+                      automake \
+                      debhelper dh-autoreconf libssl-dev libtool openssl procps python-zopeinterface module-assistant dkms make libc6-dev python-argparse uuid-runtime netbase kmod python-twisted-web iproute2 ipsec-tools
 
 CMD [ "/bin/bash" ]
