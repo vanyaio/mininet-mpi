@@ -13,18 +13,20 @@
 # - NUM_INTER_LINKS, default value 1
 
 TOPO="fattree"
-if [ $# -lt 2 ]; then
-    if [ "$1" "==" "fattree" ]; then
+if test $# -lt 2 ; then
+    if test "$1" = "fattree" ; then
         TOPO="fattree"
-    elif [ "$1" "==" "dragonfly" ]; then
+    elif test "$1" = "dragonfly" ; then
         TOPO="dragonfly"
-    elif [ "$1" "==" "" ]; then
+    elif test "$1" = "" ; then
         :
     else
-        set -e ; echo -e "\e[1;31m\"$1\" is not correct name of topology\e[0m"
+        echo -e "\e[1;31m\"$1\" is not correct name of topology\e[0m"
+        exit 1
     fi
 else
-    set -e ; echo -e "\e[1;31mNot correct number of arguments\e[0m"
+    echo -e "\e[1;31mNot correct number of arguments\e[0m"
+    exit 1
 fi
 echo -e "\e[32mUsed '$TOPO' topology\e[0m"
 
@@ -44,7 +46,7 @@ popd
 
 ../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
 
-if [ "$TOPO" "==" "fattree" ]; then
+if test "$TOPO" = "fattree" ; then
     export PACKET_LOSS
     export PODS
     export DENSITY
@@ -56,7 +58,7 @@ if [ "$TOPO" "==" "fattree" ]; then
     sh sleep 3
     h001 /data/start_app.sh
 EOF
-elif [ "$TOPO" "==" "dragonfly" ]; then
+elif test "$TOPO" = "dragonfly" ; then
     export PACKET_LOSS
     export NUM_GROUPS
     export NUM_SW_IN_GROUP

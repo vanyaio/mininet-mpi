@@ -1,4 +1,4 @@
-Emulation of MPI cluster with fat-tree topology using Containernet.
+Emulation of MPI cluster with Fat Tree and Dragonfly topologies using Containernet.
 
 Проект выполнен в рамках курса "Основы Grid и Cloud вычислений", СПбГУ,
 факультет ПМ-ПУ.
