@@ -18,20 +18,20 @@ read_b4_match () {
 rm all_exec_times
 
 TOPO="fattree"
-if test -z "$1" ; then
-	packets_loss=(0 5 10 15 20 25 30)
-	runs=(1 2 3 4 5)
-elif test "$1" = "single" ; then
-	packets_loss=(0)
-	runs=(1)
-	if test ! -z "$2" && (test "$2" = "fattree" || test "$2" = "dragonfly") ; then
-        TOPO="$2"
-    fi
-elif test "$1" = "fattree" || test "$1" = "dragonfly"; then
-    TOPO="$1"
-else 
-	echo "Unknown option"
-	exit 1
+packets_loss=(0 5 10 15 20 25 30)
+runs=(1 2 3 4 5)
+
+if test ! -z "$1" && test "$1" = "single" ; then
+        packets_loss=(0)
+        runs=(1)
+        if test ! -z "$2" && (test "$2" = "fattree" || test "$2" = "dragonfly") ; then
+                TOPO="$2"
+        fi
+elif test ! -z "$1" && (test "$1" = "fattree" || test "$1" = "dragonfly") ; then
+        TOPO="$1"
+else
+        echo "Unknown option"
+        exit 1
 fi
 
 for PACKET_LOSS in ${packets_loss[@]}; do

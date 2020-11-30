@@ -15,6 +15,7 @@ def draw_all_points(gr):
     plt.scatter(x, y)
     plt.xlabel('Broken links, %')
     plt.ylabel('Time')
+    plt.savefig('fig_all.png', format='png')
     plt.show()
 
 def draw_average_points(gr):
@@ -34,9 +35,8 @@ def draw_average_points(gr):
     plt.plot(x, y)
     plt.xlabel('Broken links, %')
     plt.ylabel('Time')
+    plt.savefig('fig_average.png', format='png')
     plt.show()
-    print(x)
-    print(y)
 
 curr_x = None
 gr = dict() #{ xi : [y1,..,yn] }

@@ -103,7 +103,7 @@ class DragonFly(Topo):
                         **linkopts)
 
 
-    def addInterLinks(self, groups_switches, linkopts):
+    def addInterLinks_random(self, groups_switches, linkopts):
         number_inter_links = [[self.s_interlinks_num for _ in range(self.s_g_num)] for _ in range(self.g_num)]
         while sum(map(sum, number_inter_links)) > 0:
             logger.debug(str(number_inter_links))
@@ -117,6 +117,30 @@ class DragonFly(Topo):
                     **linkopts)
                 number_inter_links[g1_i][sw1_i] -= 1
                 number_inter_links[g2_i][sw2_i] -= 1
+
+
+    def addInterLinks(self, groups_switches, linkopts):
+        number_inter_links = [[self.s_interlinks_num for _ in range(self.s_g_num)] for _ in range(self.g_num)]
+        for g1_i in range(self.g_num):
+            for sw1_i in range(self.s_g_num):
+                g2_i = (g1_i + sw1_i + 1) % self.g_num
+                if g2_i == g1_i: g2_i = (g2_i + 1) % self.g_num
+                while number_inter_links[g1_i][sw1_i] > 0:
+                    for sw2_i in range(self.s_g_num):
+                        if number_inter_links[g2_i][sw2_i] > 0:
+                            self.addLink(
+                                groups_switches[g1_i][sw1_i],
+                                groups_switches[g2_i][sw2_i],
+                                loss=10 if (int(randint(0, 100)) < self.loss_prob) else 0,
+                                **linkopts
+                            )
+                            number_inter_links[g1_i][sw1_i] -= 1
+                            number_inter_links[g2_i][sw2_i] -= 1
+                            break
+                    if sum(map(sum, number_inter_links)) - sum(number_inter_links[g1_i]) == 0: return
+                    g2_i = (g2_i + 1) % self.g_num
+                    if g2_i == g1_i: g2_i = (g2_i + 1) % self.g_num
+
 
 
 def dump_etc_hosts(net):
@@ -135,7 +159,7 @@ def run_set_ssh(net):
     for d in net.hosts:
         d.cmd('/data/set_ssh.sh start')
 
-def createTopo(g=4, a=None, p=1, h=1, bw_sw_h=0.2, bw_inn_sw=0.5, bw_int_sw=0.7, ip="127.0.0.1", port=6633):
+def createTopo(g=4, a=None, p=1, h=1, bw_sw_h=10, bw_inn_sw=30, bw_int_sw=10, ip="127.0.0.1", port=6633):
     if a is None: a = g - 1 # Canonical Topo
     logging.debug("LV1 Create DragonFly")
     topo = DragonFly(g, a, p, h)
