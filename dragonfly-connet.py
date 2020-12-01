@@ -34,7 +34,7 @@ class DragonFly(Topo):
         self.s_g_num = a
         self.h_s_num = p
         self.s_interlinks_num = h
-        logger.debug(f"Start with g={g}, a={a}, p={p}, h={h}")
+        logger.debug("Start with g={}, a={}, p={}, h={}".format(g, a, p, h))
 
         self.loss_prob = int(os.getenv('PACKET_LOSS', default=0))
 
@@ -67,14 +67,14 @@ class DragonFly(Topo):
     Create Switches and Hosts
     """
     def createGroupsSwitches(self):
-        return [[self.addSwitch(f"s{num_group}00{num_switch}")
+        return [[self.addSwitch("s{}00{}".format(num_group, num_switch))
                 for num_switch in range(1, self.s_g_num + 1)] 
             for num_group in range(1, self.g_num + 1)]
 
 
     def createHosts(self):
         image="spagnuolocarmine/docker-mpi"
-        return [self.addHost(f"h00{num_host}", cls=Docker, dimage=image, volumes=["data:/data"]) 
+        return [self.addHost("h00{}".format(num_host), cls=Docker, dimage=image, volumes=["data:/data"]) 
             for num_host in range(1, self.g_num * self.s_g_num * self.h_s_num + 1)]
 
 
