@@ -63,9 +63,9 @@ elif test "$TOPO" = "dragonfly" ; then
     export NUM_HOSTS_FOR_SW
     export NUM_INTER_LINKS
     if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
-    if test "$NUM_GROUPS" = ""; then NUM_GROUPS=4; fi
-    if test "$NUM_SW_IN_GROUP" = ""; then NUM_SW_IN_GROUP=3; fi
-    if test "$NUM_HOSTS_FOR_SW" = ""; then NUM_HOSTS_FOR_SW=1; fi
+    if test "$NUM_GROUPS" = ""; then NUM_GROUPS=3; fi
+    if test "$NUM_SW_IN_GROUP" = ""; then NUM_SW_IN_GROUP=2; fi
+    if test "$NUM_HOSTS_FOR_SW" = ""; then NUM_HOSTS_FOR_SW=2; fi
     if test "$NUM_INTER_LINKS" = ""; then NUM_INTER_LINKS=1; fi
     # python3 dragonfly-connet.py
     cat <<EOF | python3 dragonfly-connet.py
