@@ -3,10 +3,14 @@ language: python
 python:
   - "3.8"
 
-env:
-  - TOPO=fattree
-
-install:
-  - git clone https://github.com/containernet/containernet.git
-
-script: echo "$TOPO is used"
+jobs:
+  include:
+    - name: "Mpi modeling on fattree topology"
+      script:
+        - . build.sh
+        - ./stats_run.sh fattree
+      
+    - name: "Mpi modeling on dragonfly topology"
+      script:
+        - . build.sh
+        - ./stats_run.sh dragonfly
