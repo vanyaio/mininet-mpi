@@ -24,11 +24,13 @@ jobs:
     - name: "Mpi modeling on fattree topology"
       script:
         - . build.sh
+        - sudo chown -R $USER .
         - echo "Run from $PWD"
         - ./stats_run.sh fattree
       
     - name: "Mpi modeling on dragonfly topology"
       script:
         - . build.sh
+        - sudo chown -R $USER .
         - echo "Run from $PWD"
         - ./stats_run.sh dragonfly
