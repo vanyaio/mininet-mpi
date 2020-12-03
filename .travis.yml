@@ -1,0 +1,12 @@
+language: python
+
+python:
+  - "3.8"
+
+env:
+  - TOPO=fattree
+
+install:
+  - git clone https://github.com/containernet/containernet.git
+
+script: echo "$TOPO is used"
