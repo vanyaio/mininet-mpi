@@ -2,15 +2,24 @@ language: python
 
 python:
   - "3.8"
+  
+install:
+  - sudo apt install virtualbox
+  - sudo apt install vagrant
+  - pip install matplotlib
 
 jobs:
   include:
     - name: "Mpi modeling on fattree topology"
       script:
+        - vagrant --version
         - . build.sh
+        - echo "Run from $pwd"
         - ./stats_run.sh fattree
       
     - name: "Mpi modeling on dragonfly topology"
       script:
+        - vagrant --version
         - . build.sh
+        - echo "Run from $pwd"
         - ./stats_run.sh dragonfly

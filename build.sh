@@ -7,7 +7,7 @@ cd ..
 git clone https://github.com/containernet/containernet.git
 
 echo -e "\e[33mMove repository\e[0m"
-cp -r $repository_dir ./containernet/mininet-mpi
+mv -r $repository_dir ./containernet/mininet-mpi
 
 echo -e "\e[33mInstall pox\e[0m"
 cd containernet
