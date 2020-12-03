@@ -17,6 +17,9 @@ install:
 # Install vagrant-libvirt Vagrant plugin
 - sudo vagrant plugin install vagrant-libvirt
 
+# Setting up permissions
+- sudo chown -R $USER:$USER ~/.vagrant.d
+
 - pip install matplotlib
 
 jobs:
