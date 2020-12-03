@@ -22,6 +22,7 @@ install:
 
 env:
 - VAGRANT_DEFAULT_PROVIDER=libvirt
+- OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
 
 jobs:
   include:
