@@ -22,7 +22,6 @@ install:
 
 env:
 - VAGRANT_DEFAULT_PROVIDER=libvirt
-- OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
 
 jobs:
   include:
@@ -30,10 +29,12 @@ jobs:
       script:
         - . build.sh
         - echo "Run from $PWD"
+        - export OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
         - sudo ./stats_run.sh fattree
       
     - name: "Mpi modeling on dragonfly topology"
       script:
         - . build.sh
         - echo "Run from $PWD"
+        - export OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
         - sudo ./stats_run.sh dragonfly
