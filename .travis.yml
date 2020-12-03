@@ -1,10 +1,10 @@
+dist: bionic
 language: python
-
 python:
   - "3.8"
-  
+
 install:
-# Install libvrt & KVM (see https://github.com/alvistack/ansible-role-virtualbox/blob/master/.travis.yml)
+# Install libvrt & KVM
 - sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
 
 # Download Vagrant & Install Vagrant package
@@ -17,23 +17,22 @@ install:
 # Install vagrant-libvirt Vagrant plugin
 - sudo vagrant plugin install vagrant-libvirt
 
-# Setting up permissions
-- sudo chown -R $USER:$USER ~/.vagrant.d
-
+# Install tool for visualization
 - pip install matplotlib
+
+env:
+- VAGRANT_DEFAULT_PROVIDER=libvirt
 
 jobs:
   include:
     - name: "Mpi modeling on fattree topology"
       script:
         - . build.sh
-        - sudo chown -R $USER .
         - echo "Run from $PWD"
-        - ./stats_run.sh fattree
+        - sudo ./stats_run.sh fattree
       
     - name: "Mpi modeling on dragonfly topology"
       script:
         - . build.sh
-        - sudo chown -R $USER .
         - echo "Run from $PWD"
-        - ./stats_run.sh dragonfly
+        - sudo ./stats_run.sh dragonfly
