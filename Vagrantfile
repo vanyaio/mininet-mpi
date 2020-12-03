@@ -16,8 +16,6 @@ Vagrant.configure(2) do |config|
 
   # Options for Libvirt Vagrant provider.
   config.vm.provider :libvirt do |libvirt|
-    libvirt.name = "containernet"
-
     # A hypervisor name to access. Different drivers can be specified, but
     # this version of provider creates KVM machines only. Some examples of
     # drivers are KVM (QEMU hardware accelerated), QEMU (QEMU emulated),
