@@ -4,22 +4,31 @@ python:
   - "3.8"
   
 install:
-  - sudo apt install virtualbox
-  - sudo apt install vagrant
-  - pip install matplotlib
+# Install libvrt & KVM (see https://github.com/alvistack/ansible-role-virtualbox/blob/master/.travis.yml)
+- sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
+
+# Download Vagrant & Install Vagrant package
+- sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb
+- sudo dpkg -i vagrant_2.2.14_x86_64.deb
+
+# Vagrant correctly installed?
+- vagrant --version
+
+# Install vagrant-libvirt Vagrant plugin
+- sudo vagrant plugin install vagrant-libvirt
+
+- pip install matplotlib
 
 jobs:
   include:
     - name: "Mpi modeling on fattree topology"
       script:
-        - vagrant --version
         - . build.sh
         - echo "Run from $pwd"
         - ./stats_run.sh fattree
       
     - name: "Mpi modeling on dragonfly topology"
       script:
-        - vagrant --version
         - . build.sh
         - echo "Run from $pwd"
         - ./stats_run.sh dragonfly
