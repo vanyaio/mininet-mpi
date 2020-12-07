@@ -1,11 +1,7 @@
 language: python
-sudo: required
-
-matrix:
-  include:
-    - dist: bionic
-      python: 3.8
-      env: dist="18.04 LTS bionic"
+os: linux
+dist: bionic
+python: 3.8
       
 services:
   - docker
