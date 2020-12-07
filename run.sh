@@ -44,7 +44,7 @@ pushd /var/lib/docker/volumes/data/_data
 ssh-keygen -t rsa -f id_rsa -N ''
 popd
 
-../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
+#../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
 #../pox/pox.py forwarding.hub
 
 if test "$TOPO" = "fattree" ; then
