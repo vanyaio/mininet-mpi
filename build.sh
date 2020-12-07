@@ -16,5 +16,5 @@ cd pox
 git checkout remotes/origin/dart
 cd ..
 
-echo -e "\e[33mReturn to repository\e[0m"
-cd mininet-mpi
+# echo -e "\e[33mReturn to repository\e[0m"
+# cd mininet-mpi
