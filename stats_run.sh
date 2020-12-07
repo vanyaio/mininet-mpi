@@ -45,6 +45,7 @@ for PACKET_LOSS in ${packets_loss[@]}; do
 		popd
 		cat exec_time >> all_exec_times
 		if test ! -f exec_time ; then echo inf >> all_exec_times ; fi
+		cat all_exec_times
 	done
 done
 
