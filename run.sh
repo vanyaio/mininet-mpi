@@ -52,15 +52,15 @@ if test "$TOPO" = "fattree" ; then
     if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
     if test "$PODS" = ""; then PODS=4; fi
     if test "$DENSITY" = ""; then DENSITY=1; fi
-    cat <<EOF | python3 fattree-connet.py
-    sh sleep 3
-    pingall
-EOF
-#     python3 fattree-connet.py
 #     cat <<EOF | python3 fattree-connet.py
 #     sh sleep 3
-#     h001 /data/start_app.sh
+#     pingall
 # EOF
+#     python3 fattree-connet.py
+    cat <<EOF | python3 fattree-connet.py
+    sh sleep 3
+    h001 /data/start_app.sh
+EOF
 elif test "$TOPO" = "dragonfly" ; then
     export PACKET_LOSS
     export NUM_GROUPS
@@ -72,15 +72,15 @@ elif test "$TOPO" = "dragonfly" ; then
     if test "$NUM_SW_IN_GROUP" = ""; then NUM_SW_IN_GROUP=2; fi
     if test "$NUM_HOSTS_FOR_SW" = ""; then NUM_HOSTS_FOR_SW=2; fi
     if test "$NUM_INTER_LINKS" = ""; then NUM_INTER_LINKS=1; fi
-    cat <<EOF | python3 dragonfly-connet.py
-    sh sleep 3
-    pingall
-EOF
-#     python3 dragonfly-connet.py
 #     cat <<EOF | python3 dragonfly-connet.py
 #     sh sleep 3
-#     h001 /data/start_app.sh
+#     pingall
 # EOF
+#     python3 dragonfly-connet.py
+    cat <<EOF | python3 dragonfly-connet.py
+    sh sleep 3
+    h001 /data/start_app.sh
+EOF
 fi
 
 cp $VOLUME/exec_time exec_time &> /dev/null
