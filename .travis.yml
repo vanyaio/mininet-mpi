@@ -1,27 +1,21 @@
-dist: bionic
 language: python
-python:
-  - "3.8"
+sudo: required
 
+matrix:
+  include:
+    - dist: bionic
+      python: 3.8
+      env: dist="18.04 LTS bionic"
+      
+services:
+  - docker
+  
 install:
-# Install libvrt & KVM
-- sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
-
-# Download Vagrant & Install Vagrant package
-- sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb
-- sudo dpkg -i vagrant_2.2.14_x86_64.deb
-
-# Vagrant correctly installed?
-- vagrant --version
-
-# Install vagrant-libvirt Vagrant plugin
-- sudo vagrant plugin install vagrant-libvirt
+# Update packages
+- sudo apt-get update
 
 # Install tool for visualization
 - pip install matplotlib
-
-env:
-- VAGRANT_DEFAULT_PROVIDER=libvirt
 
 jobs:
   include:
@@ -29,12 +23,12 @@ jobs:
       script:
         - . build.sh
         - echo "Run from $PWD"
-        - export OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
-        - sudo ./stats_run.sh fattree
+        - docker build -t containernet/containernet:ubuntu .
+        - docker run --name containernet --rm --privileged --pid='host' -v /var/run/docker.sock:/var/run/docker.sock containernet/containernet ./mininet-mpi/run.sh fattree
       
     - name: "Mpi modeling on dragonfly topology"
       script:
         - . build.sh
         - echo "Run from $PWD"
-        - export OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
-        - sudo ./stats_run.sh dragonfly
+        - docker build -t containernet/containernet:ubuntu .
+        - docker run --name containernet --rm --privileged --pid='host' -v /var/run/docker.sock:/var/run/docker.sock containernet/containernet ./mininet-mpi/run.sh dragonfly

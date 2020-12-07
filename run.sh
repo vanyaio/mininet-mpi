@@ -28,7 +28,9 @@ else
 fi
 echo -e "\e[32mUsed '$TOPO' topology\e[0m"
 
-docker stop $(docker ps -a -q) ; docker rm $(docker ps -a -q)
+#docker stop $(docker ps -a -q) ; docker rm $(docker ps -a -q)
+docker ps -a | awk '{ print $1,$2 }' | grep spagnuolocarmine/docker-mpi | awk '{print $1 }' | xargs -I {} docker stop {}
+docker ps -a | awk '{ print $1,$2 }' | grep spagnuolocarmine/docker-mpi | awk '{print $1 }' | xargs -I {} docker rm {}
 docker build -t spagnuolocarmine/docker-mpi .
 docker volume rm data
 docker volume create data
@@ -42,8 +44,8 @@ pushd /var/lib/docker/volumes/data/_data
 ssh-keygen -t rsa -f id_rsa -N ''
 popd
 
-# ../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
-../pox/pox.py forwarding.hub
+../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
+#../pox/pox.py forwarding.hub
 
 if test "$TOPO" = "fattree" ; then
     export PACKET_LOSS
