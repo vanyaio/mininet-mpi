@@ -20,11 +20,11 @@ jobs:
         - . build.sh
         - echo "Run from $PWD"
         - docker build -t containernet/containernet:ubuntu .
-        - docker run --name containernet --rm --privileged --pid='host' -v /var/run/docker.sock:/var/run/docker.sock containernet/containernet:ubuntu ./mininet-mpi/start.sh fattree
+        - docker run —name containernet -it —rm —privileged —pid='host' -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes containernet/containernet:ubuntu ./mininet-mpi/start.sh fattree
       
     - name: "Mpi modeling on dragonfly topology"
       script:
         - . build.sh
         - echo "Run from $PWD"
         - docker build -t containernet/containernet:ubuntu .
-        - docker run --name containernet --rm --privileged --pid='host' -v /var/run/docker.sock:/var/run/docker.sock containernet/containernet:ubuntu ./mininet-mpi/start.sh dragonfly
+        - docker run —name containernet -it —rm —privileged —pid='host' -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes containernet/containernet:ubuntu ./mininet-mpi/start.sh dragonfly
