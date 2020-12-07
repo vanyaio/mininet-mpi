@@ -31,6 +31,7 @@ jobs:
         - echo "Run from $PWD"
         - export OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
         - sudo ./stats_run.sh fattree
+        - cat all_exec_times
       
     - name: "Mpi modeling on dragonfly topology"
       script:
@@ -38,3 +39,4 @@ jobs:
         - echo "Run from $PWD"
         - export OVERRIDE_CONTAINERNET_VAGRANTFILE=yes
         - sudo ./stats_run.sh dragonfly
+        - cat all_exec_times
