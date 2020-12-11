@@ -19,12 +19,16 @@ jobs:
       script:
         - . build.sh
         - echo "Run from $PWD"
-        - cd ../ansible ; sudo ansible-playbook -i "localhost," -c local install.yml ; cd ../mininet-mpi
+        - cd ../ansible ; sudo ansible-playbook -i "localhost," -c local install.yml ; cd ..
+        - sudo make install
+        - cd mininet-mpi
         - sudo -E ./run.sh fattree
     - name: "Mpi modeling on dragonfly topology"
       script:
         - . build.sh
         - echo "Run from $PWD"
-        - cd ../ansible ; sudo ansible-playbook -i "localhost," -c local install.yml ; cd ../mininet-mpi
+        - cd ../ansible ; sudo ansible-playbook -i "localhost," -c local install.yml ; cd ..
+        - sudo make install
+        - cd mininet-mpi
         - sudo -E ./run.sh dragonfly
 
