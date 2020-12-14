@@ -38,11 +38,16 @@ for PACKET_LOSS in ${packets_loss[@]}; do
 	echo "$PACKET_LOSS :" >> all_exec_times
 	for i in ${runs[@]} ; do
 		rm exec_time
-		if test "$OVERRIDE_CONTAINERNET_VAGRANTFILE" = "yes"; then yes | cp ./Vagrantfile ./../; fi
-		pushd ..
-		vagrant halt --force ; vagrant up
-		vagrant ssh -c "export PACKET_LOSS=$PACKET_LOSS ; cd /home/ubuntu/containernet/mininet-mpi ; sudo -E ./run.sh $TOPO" | read_b4_match
-		popd
+		if test "$CLUSTER" = "yes" ; then
+			export PACKET_LOSS=$PACKET_LOSS
+			sudo ./run.sh $TOPO
+		else
+			if test "$OVERRIDE_CONTAINERNET_VAGRANTFILE" = "yes"; then yes | cp ./Vagrantfile ./../; fi
+			pushd ..
+			vagrant halt --force ; vagrant up
+			vagrant ssh -c "export PACKET_LOSS=$PACKET_LOSS ; cd /home/ubuntu/containernet/mininet-mpi ; sudo -E ./run.sh $TOPO" | read_b4_match
+			popd
+		fi
 		cat exec_time >> all_exec_times
 		if test ! -f exec_time ; then echo inf >> all_exec_times ; fi
 		cat all_exec_times

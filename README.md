@@ -16,9 +16,6 @@ $ cd containernet
 
 ```
 $ git clone https://github.com/noxrepo/pox
-$ cd pox
-$ git checkout remotes/origin/dart
-$ cd ..
 ```
 
 3. Clone this repository:
@@ -35,20 +32,24 @@ Please note that you must end up with the following tree structure:
 │   └── pox
 ```
 
-The last dependency is Vagrant: https://www.vagrantup.com/docs/installation
+If you prefer containernet to be run bare-metal, see "Bare-metal installation" in
+containernet repository with development installation (sudo make develop). Note that on Ubuntu 20.04 you likely have to install net-tools with 'sudo apt install net-tools'.
+Otherwise use Vagrant: https://www.vagrantup.com/docs/installation
 
 ## Usage
 
 Put your MPI application to mininet-mpi/mpi-app with its Makefile or stay
 with example broadcasting application.
 
-For single cluster run change directory to containernet and ssh Vagrant box:
+For single cluster run with Vagrant change directory to containernet and ssh Vagrant box:
 
 ```
 $ vagrant up
 $ vagrantup ssh
 vagrant@ubuntu$ cd /home/ubuntu/containernet/mininet-mpi
 ```
+
+Or with bare-metal installation, change directory to mininet-mpi.
 
 There are two network topologies to choose from: 'fattree' and 'dragonfly'.
 

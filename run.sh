@@ -28,15 +28,14 @@ else
 fi
 echo -e "\e[32mUsed '$TOPO' topology\e[0m"
 
-#docker stop $(docker ps -a -q) ; docker rm $(docker ps -a -q)
-#docker build -t spagnuolocarmine/docker-mpi .
 docker ps -a | awk '{ print $1,$2 }' | grep spagnuolocarmine/docker-mpi | awk '{print $1 }' | xargs -I {} docker stop {}
 docker ps -a | awk '{ print $1,$2 }' | grep spagnuolocarmine/docker-mpi | awk '{print $1 }' | xargs -I {} docker rm {}
+#TODO: cluster failed to build this image, now its tar in $HOME
+if test "$CLUSTER" = "yes" ; then docker build -t spagnuolocarmine/docker-mpi . ; fi
 docker volume rm data
 docker volume create data
 
-export VOLUME=/var/lib/docker/volumes/data/_data
-export VOLUME=/home/docker_w3_data/volumes/data/_data
+export VOLUME=$(docker volume inspect --format '{{ .Mountpoint }}' data)
 cp set_ssh.sh $VOLUME 
 cp start_app.sh $VOLUME
 cp -r mpi-app $VOLUME 
@@ -46,8 +45,6 @@ ssh-keygen -t rsa -f id_rsa -N ''
 popd
 
 ../pox/pox.py forwarding.l2_pairs openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &
-#../pox/pox.py forwarding.l2_multi openflow.discovery --eat-early-packets openflow.spanning_tree --no-flood --hold-down &> /dev/null &
-#../pox/pox.py forwarding.hub &
 
 if test "$TOPO" = "fattree" ; then
     export PACKET_LOSS
@@ -55,16 +52,17 @@ if test "$TOPO" = "fattree" ; then
     export DENSITY
     if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
     if test "$PODS" = ""; then PODS=4; fi
-    if test "$DENSITY" = ""; then DENSITY=13; fi
+   # if test "$DENSITY" = ""; then DENSITY=13; fi
+    if test "$DENSITY" = ""; then DENSITY=1; fi
 #     cat <<EOF | python3 fattree-connet.py
 #     sh sleep 3
 #     pingall
 # EOF
-     python3 fattree-connet.py
-#    cat <<EOF | python3 fattree-connet.py
-#    sh sleep 3
-#    h001 /data/start_app.sh
-#EOF
+#     python3 fattree-connet.py
+    cat <<EOF | python3 fattree-connet.py
+    sh sleep 3
+    h001 /data/start_app.sh
+EOF
 elif test "$TOPO" = "dragonfly" ; then
     export PACKET_LOSS
     export NUM_GROUPS
@@ -74,17 +72,17 @@ elif test "$TOPO" = "dragonfly" ; then
     if test "$PACKET_LOSS" = ""; then PACKET_LOSS=0; fi
     if test "$NUM_GROUPS" = ""; then NUM_GROUPS=4; fi
     if test "$NUM_SW_IN_GROUP" = ""; then NUM_SW_IN_GROUP=3; fi
-    if test "$NUM_HOSTS_FOR_SW" = ""; then NUM_HOSTS_FOR_SW=8; fi
+    if test "$NUM_HOSTS_FOR_SW" = ""; then NUM_HOSTS_FOR_SW=10; fi
     if test "$NUM_INTER_LINKS" = ""; then NUM_INTER_LINKS=1; fi
 #     cat <<EOF | python3 dragonfly-connet.py
 #     sh sleep 3
 #     pingall
 # EOF
-     python3 dragonfly-connet.py
-#    cat <<EOF | python3 dragonfly-connet.py
-#    sh sleep 3
-#    h001 /data/start_app.sh
-#EOF
+#   python3 dragonfly-connet.py
+    cat <<EOF | python3 dragonfly-connet.py
+    sh sleep 3
+    h001 /data/start_app.sh
+EOF
 fi
 
 cp $VOLUME/exec_time exec_time &> /dev/null
