@@ -28,12 +28,13 @@ int main(int argc,char **argv)
 	MPI_Barrier(MPI_COMM_WORLD);
 	exec_time -= MPI_Wtime();
 
-	for (int root = 0; root < world_size; root++)
-	{
+//	for (int root = 0; root < world_size; root++)
+//	{
+	int root = 0;
 		for (int i = 0; i < MSG_NUM; i++)
 			MPI_Bcast(buff, BUFF_SIZE, MPI_CHAR, root,
 				  MPI_COMM_WORLD);
-	}
+//	}
 
 	MPI_Barrier(MPI_COMM_WORLD);
 	exec_time += MPI_Wtime();
