@@ -31,7 +31,7 @@ echo -e "\e[32mUsed '$TOPO' topology\e[0m"
 docker ps -a | awk '{ print $1,$2 }' | grep spagnuolocarmine/docker-mpi | awk '{print $1 }' | xargs -I {} docker stop {}
 docker ps -a | awk '{ print $1,$2 }' | grep spagnuolocarmine/docker-mpi | awk '{print $1 }' | xargs -I {} docker rm {}
 #TODO: cluster failed to build this image, now its tar in $HOME
-if test "$CLUSTER" = "yes" ; then docker build -t spagnuolocarmine/docker-mpi . ; fi
+if test "$CLUSTER" != "yes" ; then docker build -t spagnuolocarmine/docker-mpi . ; fi
 docker volume rm data
 docker volume create data
 
