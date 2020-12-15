@@ -1,8 +1,10 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
+ENV TZ=Europe/Kiev
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get --yes -qq update \
  && apt-get --yes -qq upgrade \
