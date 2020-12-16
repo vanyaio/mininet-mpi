@@ -1,7 +1,6 @@
 Emulation of MPI cluster with Fat Tree and Dragonfly topologies using Containernet.
 
-Проект выполнен в рамках курса "Основы Grid и Cloud вычислений", СПбГУ,
-факультет ПМ-ПУ.
+The project was carried out within the framework of the course "Fundamentals of Grid and Cloud Computing", St. Petersburg State University, AM-CP
 ## Installation
 Project relies on the specific environment, described below
 
@@ -136,7 +135,7 @@ All time points            |  Average time
 :-------------------------:|:-------------------------:
 ![dragonfly-4-3-3-2_fig_all](benchmarks/dragonfly/dragonfly-4-3-3-2_fig_all.png)  |  ![dragonfly-4-3-3-2_fig_average](benchmarks/dragonfly/dragonfly-4-3-3-2_fig_average.png)
 
-> **Remark**: on the university cluster, we managed to build a topology of ***100 nodes*** and conduct ***pingall*** testing with ***0% dropped***
+> **Remark**: on the university cluster, we managed to build a topology of ***100 host nodes*** and conduct ***pingall*** testing with ***0% dropped*** packets
 
 ## Useful links
 The following links are helpful if you decide to dig into sources:\
