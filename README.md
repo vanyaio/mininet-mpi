@@ -113,6 +113,30 @@ behavior of POX/Containernet or author's misconfiguraton of some of them
 and starts run.sh with ssh, accumulating execution time of each run in
 all_exec_times file and drawing graph with draw_python.py.
 
+## Benchmarking
+The MPI program performance was measured on both topologies. The variable was PACKET_LOSS *(or else the percentage of broken links)*.\
+Characteristics of the computing device:\
+***CPU***: *Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz*\
+***RAM***: *8GB*
+### Fat Tree
+PODS=**4**, DENSITY=**5** *(i.e. 40 nodes)*\
+##### Visual representation:
+<img src="topo-visual/fattree-4-5.png" alt="visual fattree-4-5" width="80%">\
+##### Measurements ([file log](benchmarks/fattree/fattree-4-5_benchmark.txt)):
+All time points            |  Average time
+:-------------------------:|:-------------------------:
+![fattree-4-5_fig_all](benchmarks/fattree/fattree-4-5_fig_all.png)  |  ![fattree-4-5_fig_average](benchmarks/fattree/fattree-4-5_fig_average.png)
+### Dragonfly
+NUM_GROUPS=**4**, NUM_SW_IN_GROUP=**3**, NUM_HOSTS_FOR_SW=**3**, NUM_INTER_LINKS=**2** *(i.e. 36 nodes)*\
+##### Visual representation:
+<img src="topo-visual/dragonfly-4-3-3-2.png" alt="visual dragonfly-4-3-3-2" width="80%">\
+##### Measurements ([file log](benchmarks/dragonfly/dragonfly-4-3-3-2_benchmark.txt)):
+All time points            |  Average time
+:-------------------------:|:-------------------------:
+![dragonfly-4-3-3-2_fig_all](benchmarks/dragonfly/dragonfly-4-3-3-2_fig_all.png)  |  ![dragonfly-4-3-3-2_fig_average](benchmarks/dragonfly/dragonfly-4-3-3-2_fig_average.png)
+
+> **Remark**: on the university cluster, we managed to build a topology of ***100 nodes*** and conduct ***pingall*** testing with ***0% dropped***
+
 ## Useful links
 The following links are helpful if you decide to dig into sources:\
 http://mininet.org - Mininet network emulator.\
