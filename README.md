@@ -120,7 +120,7 @@ Characteristics of the computing device:\
 ***CPU***: *Intel(R) Core(TM) i5-6500 CPU @ 3.20GHz*\
 ***RAM***: *8GB*
 ### Fat Tree
-PODS=**4**, DENSITY=**5** *(i.e. 40 nodes)*
+PODS=**4**, DENSITY=**5** *(i.e. 40 host devices)*
 ##### Visual representation:
 <img src="topo-visual/fattree-4-5.png" alt="visual fattree-4-5" width="80%">\
 ##### Measurements ([file log](benchmarks/fattree/fattree-4-5_benchmark.txt)):
@@ -128,7 +128,7 @@ All time points            |  Average time
 :-------------------------:|:-------------------------:
 ![fattree-4-5_fig_all](benchmarks/fattree/fattree-4-5_fig_all.png)  |  ![fattree-4-5_fig_average](benchmarks/fattree/fattree-4-5_fig_average.png)
 ### Dragonfly
-NUM_GROUPS=**4**, NUM_SW_IN_GROUP=**3**, NUM_HOSTS_FOR_SW=**3**, NUM_INTER_LINKS=**2** *(i.e. 36 nodes)*
+NUM_GROUPS=**4**, NUM_SW_IN_GROUP=**3**, NUM_HOSTS_FOR_SW=**3**, NUM_INTER_LINKS=**2** *(i.e. 36 host devices)*
 ##### Visual representation:
 <img src="topo-visual/dragonfly-4-3-3-2.png" alt="visual dragonfly-4-3-3-2" width="80%">\
 ##### Measurements ([file log](benchmarks/dragonfly/dragonfly-4-3-3-2_benchmark.txt)):
